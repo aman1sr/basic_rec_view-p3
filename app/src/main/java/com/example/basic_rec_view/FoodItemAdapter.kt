@@ -22,6 +22,8 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Mu
     override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
        val foodItem = foodItemList[position]
     holder.bind(foodItem)
+    holder.delete(position, foodItemList)
+
     }
 
 /* how many items we have to display */
@@ -39,9 +41,17 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Mu
             binding.foodItemNameTV.text = foodItem.name
             binding.foodItemPriceTV.text = "Rs. ${foodItem.price}"
 
-        }
 
         }
+
+        fun delete(position: Int, foodItemList: MutableList<FoodItem>) {
+
+            foodItemList.removeAt(position)
+
+
+        }
+
+    }
 
 
 
