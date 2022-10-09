@@ -3,6 +3,7 @@ package com.example.basic_rec_view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,10 +68,19 @@ class MainActivity : AppCompatActivity(), DeleteList {
 
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
 
-//                Snackbar.make()
+                Snackbar.make(
+                    binding.foodItemsRV,
+                    "Deleted" + deleteCourse.name,
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Undo", View.OnClickListener {
+                        foodItemList.add(position,deleteCourse)
+
+                        adapter.notifyItemInserted(position)
+                    }).show()
 
             }
-        })
+        }).attachToRecyclerView(binding.foodItemsRV)
 
 
 
@@ -80,7 +90,7 @@ class MainActivity : AppCompatActivity(), DeleteList {
 
         foodItemList.removeAt(position)
 
-        adapter = FoodItemAdapter(this, foodItemList)
-        binding.foodItemsRV.adapter = adapter
+
+        adapter.notifyItemRemoved(position)
     }
 }

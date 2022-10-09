@@ -1,7 +1,7 @@
 
 #What's New
-- Updated Adapter layout
-- Added Delete Functionality 
+- Right Swipable Item delete
+- Undo Snackbar
 
 
-[project Src](https://medium.com/@hrithik481/implement-recyclerview-in-android-with-kotlin-42408c6bf6)
+[project Src](https://www.geeksforgeeks.org/android-swipe-to-delete-and-undo-in-recyclerview-with-kotlin/)
