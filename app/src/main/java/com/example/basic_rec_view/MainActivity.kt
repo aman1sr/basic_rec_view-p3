@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.basic_rec_view.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DeleteList {
 
     private lateinit var foodItemList: MutableList<FoodItem>
     private lateinit var adapter: FoodItemAdapter
@@ -44,8 +47,40 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val deleteCourse: FoodItem = foodItemList.get(viewHolder.adapterPosition)
+
+                val position = viewHolder.adapterPosition
+
+                foodItemList.removeAt(viewHolder.adapterPosition)
+
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+//                Snackbar.make()
+
+            }
+        })
 
 
 
+    }
+
+    override fun onDelete(position: Int) {
+
+        foodItemList.removeAt(position)
+
+        adapter = FoodItemAdapter(this, foodItemList)
+        binding.foodItemsRV.adapter = adapter
     }
 }

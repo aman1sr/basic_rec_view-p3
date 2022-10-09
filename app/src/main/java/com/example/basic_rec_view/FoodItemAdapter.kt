@@ -3,6 +3,7 @@ package com.example.basic_rec_view
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basic_rec_view.databinding.FoodItemLayoutBinding
@@ -21,8 +22,8 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Mu
 /* This method is for binding our data to views */
     override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
        val foodItem = foodItemList[position]
-    holder.bind(foodItem)
-    holder.delete(position, foodItemList)
+    holder.bind(foodItem,context)
+
 
     }
 
@@ -37,17 +38,15 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Mu
 
         private val binding = foodItemLayoutBinding
 
-        fun bind(foodItem: FoodItem) {
+
+        fun bind(foodItem: FoodItem, context: Context) {
             binding.foodItemNameTV.text = foodItem.name
             binding.foodItemPriceTV.text = "Rs. ${foodItem.price}"
 
+            binding.deleteBin.setOnClickListener {
+//                Toast.makeText(context, "Delete clicked $adapterPosition", Toast.LENGTH_SHORT).show()
 
-        }
-
-        fun delete(position: Int, foodItemList: MutableList<FoodItem>) {
-
-            foodItemList.removeAt(position)
-
+            }
 
         }
 
